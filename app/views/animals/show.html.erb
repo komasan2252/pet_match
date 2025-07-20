@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @animal.name %>
+</p>
+
+<p>
+  <strong>Species:</strong>
+  <%= @animal.species %>
+</p>
+
+<p>
+  <strong>Age:</strong>
+  <%= @animal.age %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @animal.description %>
+</p>
+
+<%= link_to 'Edit', edit_animal_path(@animal) %> |
+<%= link_to 'Back', animals_path %>
+
+
+
+<h3>この子に相談する</h3>
+
+<% if user_signed_in? %>
+  <%= form_with model: [@animal, Message.new], local: true do |f| %>
+    <div>
+      <%= f.label :content, "メッセージ" %><br>
+      <%= f.text_area :content %>
+    </div>
+    <%= f.submit "送信" %>
+  <% end %>
+<% else %>
+  <p>メッセージを送るには <%= link_to "ログイン", new_user_session_path %> が必要です。</p>
+<% end %>
+
+<h3>これまでのやりとり</h3>
+<% @animal.messages.each do |message| %>
+  <p><strong><%= message.user.email %></strong>: <%= message.content %></p>
+<% end %>
