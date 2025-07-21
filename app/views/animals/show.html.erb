@@ -20,9 +20,12 @@
   <%= @animal.description %>
 </p>
 
-<%= link_to 'Edit', edit_animal_path(@animal) %> |
 <%= link_to 'Back', animals_path %>
 
+<% if user_signed_in? && current_user.admin? %>
+  <%= link_to '編集', edit_animal_path(@animal) %> |
+  <%= link_to '削除', @animal, method: :delete, data: { confirm: '本当に削除しますか？' } %>
+<% end %>
 
 
 <h3>この子に相談する</h3>

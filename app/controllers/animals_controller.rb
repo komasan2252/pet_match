@@ -1,4 +1,7 @@
 class AnimalsController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
+
+
   before_action :authenticate_user!,except: [:index, :show]
   before_action :set_animal, only: %i[ show edit update destroy ]
 
@@ -68,4 +71,11 @@ class AnimalsController < ApplicationController
     def animal_params
       params.require(:animal).permit(:name, :species, :age, :description)
     end
+
+    def authenticate_admin!
+      unless user_signed_in? && current_user.admin?
+      redirect_to animals_path, alert: "この操作は管理者のみ可能です"
+    end
+  end
+
 end
