@@ -16,6 +16,13 @@
   <tbody>
     <% @animals.each do |animal| %>
       <tr>
+        <td>
+          <% if animal.image.attached? %>
+            <%= image_tag animal.image.variant(resize_to_limit: [400, 400]) %>
+          <% else %>  
+            画像なし
+          <% end %>
+        </td>
         <td><%= animal.name %></td>
         <td><%= animal.species %></td>
         <td><%= animal.age %></td>
