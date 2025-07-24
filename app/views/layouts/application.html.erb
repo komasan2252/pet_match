@@ -6,28 +6,53 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
 
-      <p class="notice"><%= notice %></p>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff9b0;">
+  <div class="container-fluid">
+    <%= link_to 'pet match!', root_path, class: "navbar-brand" %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to 'アニマル', animals_path, class: "nav-link" %>
+        </li>
+
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to '質問', root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'お気に入り', root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'サインイン', new_user_registration_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'ログイン', new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <% if user_signed_in? %>
-      <p>
-        ログイン中：<%= current_user.email %><br>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </p>
-    <% else %>
-      <%= link_to "ログイン", new_user_session_path %> |
-      <%= link_to "ユーザー登録", new_user_registration_path %>
-    <% end %>
-
-    <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "新しい動物を登録", new_animal_path %>
-    <% end %>
 
     <%= yield %>
     

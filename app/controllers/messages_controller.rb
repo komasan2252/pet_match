@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
     before_action :set_animal
   
     def create
+      @animal = Animal.find(params[:animal_id])
       @message = @animal.messages.build(message_params)
       @message.user = current_user
       if @message.save
